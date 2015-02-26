@@ -7,11 +7,11 @@
 \usetikzlibrary{arrows}
 \usepackage{mathrsfs}
 \usepackage{float}
+\usepackage{pgfplots}
 \usepackage{caption}
 \usepackage[ruled,vlined,french,onelanguage]{algorithm2e}
 \title{TP Méthode approchées UMIN215}
 \author{Bruno Y., Chlöé T., Julien D. et Rémi F.}
-
 
 \begin{document}
 \maketitle
@@ -38,8 +38,87 @@
 
 \subsubsection*{Exercice 10 - Seuil d'approximation pour le problème de la coloration de sommets (reps. d'arêtes)}
 
+\newpage
 \subsubsection*{Exercice 11 - Comparaisons branch and bound and branch and cut}
 
+\begin{enumerate}
+\item On peut tracer les droites correspondantes aux contraintes de $PL_{0}$ :
+\begin{itemize}
+\item {$y_{1}=5-\frac{3}{2}x$}
+\item {$y_{2}=\frac{17}{2}-\frac{2}{5}x$}
+\end{itemize}
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[>=stealth]
+    \begin{axis}[
+        xmin=0,xmax=10,
+        ymin=0,ymax=6,
+        axis x line=middle,
+        axis y line=middle,
+        axis line style=->,
+        xlabel={$x$},
+        ylabel={$y$},
+        ]
+        \addplot[no marks,black,-] expression[domain=0:10/3,samples=100]{5-(3/2)*x} 
+                    node[pos=0.65,anchor=south west]{$y_{1}=5-\frac{3}{2}x$}; 
+        \addplot[no marks,black,-] expression[domain=0:17/2,samples=100]{17/5-(2/5)*x} 
+                    node[pos=0.65,anchor=south west]{$y_{2}=\frac{17}{5}-\frac{2}{5}x$}; 
+    \end{axis}
+\end{tikzpicture}
+   \caption{Représentation des équations de $PL_{0}$.}
+\end{figure}
+
+Le polytope associé aux équations de $PL_{0}$ est donc celui formé par les points : $P_{0}(0,0)$, $P_{1}(0,\frac{17}{5})$, $P_{2}(\frac{16}{11}, \frac{31}{11})$ et $P_{3}(\frac{10}{3},0)$
+
+\item On peut tracer la fonction objective :
+\begin{itemize}
+\item $y=-2x+k, k \in \mathbf{R}$
+\end{itemize}
+
+\begin{tikzpicture}[>=stealth]
+    \begin{axis}[
+        xmin=0,xmax=10,
+        ymin=0,ymax=6,
+        axis x line=middle,
+        axis y line=middle,
+        axis line style=->,
+        xlabel={$x$},
+        ylabel={$y$},
+        ]
+        \addplot[no marks,black,-] expression[domain=0:10/3,samples=100]{5-(3/2)*x} 
+                    node[pos=0.65,anchor=south west]{$y_{1}=5-\frac{3}{2}x$}; 
+        \addplot[no marks,blue,-] expression[domain=0:17/2,samples=100]{17/5-(2/5)*x} 
+                    node[pos=0.65,anchor=south west]{$y_{2}=\frac{17}{5}-\frac{2}{5}x$}; 
+                    
+	 \addplot[no marks,red,-] expression[domain=0:17/2,samples=100]{-2*x+20/3} 
+                    node[pos=0.65,anchor=south west]{Fonction objective}; 
+    \end{axis}
+\end{tikzpicture}
+
+La solution optimale pour $PL_{0}$ est donc $x_{1}=\frac{10}{3}$ et $x_{2}={0}$ avec $z=\frac{20}{3}$.
+
+\item On commence par reprendre le programme linéaire donné :
+\begin{displaymath}
+PL_{0}\begin{cases} 
+\text{max } z(x_{1},x_{2})=2x_{1}+x_{2} \\
+2x_{1}+5x_{2} \leq 17 \\
+3x_{1}+2x_{2} \leq 10 \\
+x_{1}, x_{2} \geq 0
+\end{cases}
+\end{displaymath}
+On ajoute les variables d'écarts $x_{3}$ et $x_{4}$ pour obtenir $PL_{1}$ :
+
+\begin{displaymath}
+PL_{1}\begin{cases} 
+\text{max } z(x_{1},x_{2})=2x_{1}+x_{2} \\
+2x_{1}+5x_{2} + x_{3} = 17 \\
+3x_{1}+2x_{2} + x_{4} = 10 \\
+x_{1}, x_{2} \geq 0
+\end{cases}
+\end{displaymath}
+
+\end{enumerate}
 \subsection*{Partie Pratique}
 
 \subsubsection*{2.1 Programmation dynamique}
