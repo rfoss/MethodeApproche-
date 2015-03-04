@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014) (preloaded format=pdflatex 2014.10.6)  28 FEB 2015 00:03
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014) (preloaded format=pdflatex 2014.10.6)  4 MAR 2015 14:56
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -753,7 +753,7 @@ File: ursfs.fd 1998/03/24 rsfs font definition file (jk)
 Here is how much of TeX's memory you used:
  25034 strings out of 493117
  606114 string characters out of 6135433
- 792256 words of memory out of 5000000
+ 796259 words of memory out of 5000000
  28089 multiletter control sequences out of 15000+600000
  10327 words of font info for 40 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -769,7 +769,7 @@ mi10.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmr
 fb></usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb>
 </usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><
 /usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb>
-Output written on TP.pdf (3 pages, 126386 bytes).
+Output written on TP.pdf (3 pages, 127852 bytes).
 PDF statistics:
  61 PDF objects out of 1000 (max. 8388607)
  44 compressed objects within 1 object stream
