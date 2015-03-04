@@ -10,33 +10,33 @@
 \usepackage{pgfplots}
 \usepackage{caption}
 \usepackage[ruled,vlined,french,onelanguage]{algorithm2e}
-\title{TP Méthode approchées UMIN215}
-\author{Bruno Y., Chlöé T., Julien D. et Rémi F.}
+\title{TP MÃ©thode approchÃ©es UMIN215}
+\author{Bruno Y., ChlÃ¶Ã© T., Julien D. et RÃ©mi F.}
 
 \begin{document}
 \maketitle
 
-\subsection*{Partie Théorique}
+\subsection*{Partie ThÃ©orique}
 
-\subsubsection*{Exercice 1 - Sur le problème de la couverture sommet minimale : trois approches différentes}
+\subsubsection*{Exercice 1 - Sur le problÃ¨me de la couverture sommet minimale : trois approches diffÃ©rentes}
 
-\subsubsection*{Exercice 2 - Sur le problème du couplage maximum de poids minimum : un début d'étude polyédrale sur le problème de couplage}
+\subsubsection*{Exercice 2 - Sur le problÃ¨me du couplage maximum de poids minimum : un dÃ©but d'Ã©tude polyÃ©drale sur le problÃ¨me de couplage}
 
-\subsubsection*{Exercice 3 - Sur le problème de la coupe maximum}
+\subsubsection*{Exercice 3 - Sur le problÃ¨me de la coupe maximum}
 
-\subsubsection*{Exercice 4 - Sur le problème de Partition}
+\subsubsection*{Exercice 4 - Sur le problÃ¨me de Partition}
 
-\subsubsection*{Exercice 5 - Sur le problème du sac à dos simple}
+\subsubsection*{Exercice 5 - Sur le problÃ¨me du sac Ã  dos simple}
 
 \subsubsection*{Exercice 6 - Programmation dynamique}
 
 \subsubsection*{Exercice 7 - Sur le produit matriciel}
 
-\subsubsection*{Exercice 8 - Résolution numérique}
+\subsubsection*{Exercice 8 - RÃ©solution numÃ©rique}
 
-\subsubsection*{Exercice 9 - Seuil d'approximation pour le problème Bin Packing}
+\subsubsection*{Exercice 9 - Seuil d'approximation pour le problÃ¨me Bin Packing}
 
-\subsubsection*{Exercice 10 - Seuil d'approximation pour le problème de la coloration de sommets (reps. d'arêtes)}
+\subsubsection*{Exercice 10 - Seuil d'approximation pour le problÃ¨me de la coloration de sommets (reps. d'arÃªtes)}
 
 \newpage
 \subsubsection*{Exercice 11 - Comparaisons branch and bound and branch and cut}
@@ -66,10 +66,10 @@
                     node[pos=0.65,anchor=south west]{$y_{2}=\frac{17}{5}-\frac{2}{5}x$}; 
     \end{axis}
 \end{tikzpicture}
-   \caption{Représentation des équations de $PL_{0}$.}
+   \caption{ReprÃ©sentation des Ã©quations de $PL_{0}$.}
 \end{figure}
 
-Le polytope associé aux équations de $PL_{0}$ est donc celui formé par les points : $P_{0}(0,0)$, $P_{1}(0,\frac{17}{5})$, $P_{2}(\frac{16}{11}, \frac{31}{11})$ et $P_{3}(\frac{10}{3},0)$
+Le polytope associÃ© aux Ã©quations de $PL_{0}$ est donc celui formÃ© par les points : $P_{0}(0,0)$, $P_{1}(0,\frac{17}{5})$, $P_{2}(\frac{16}{11}, \frac{31}{11})$ et $P_{3}(\frac{10}{3},0)$
 
 \item On peut tracer la fonction objective :
 \begin{itemize}
@@ -98,7 +98,7 @@ Le polytope associé aux équations de $PL_{0}$ est donc celui formé par les point
 
 La solution optimale pour $PL_{0}$ est donc $x_{1}=\frac{10}{3}$ et $x_{2}={0}$ avec $z=\frac{20}{3}$.
 
-\item On commence par reprendre le programme linéaire donné :
+\item On commence par reprendre le programme linÃ©aire donnÃ© :
 \begin{displaymath}
 PL_{0}\begin{cases} 
 \text{max } z(x_{1},x_{2})=2x_{1}+x_{2} \\
@@ -107,7 +107,7 @@ PL_{0}\begin{cases}
 x_{1}, x_{2} \geq 0
 \end{cases}
 \end{displaymath}
-On ajoute les variables d'écarts $x_{3}$ et $x_{4}$ pour obtenir $PL_{1}$ :
+On ajoute les variables d'Ã©carts $x_{3}$ et $x_{4}$ pour obtenir $PL_{1}$ :
 
 \begin{displaymath}
 PL_{1}\begin{cases} 
@@ -119,7 +119,7 @@ x_{1}, x_{2} \geq 0
 \end{displaymath}
 
 
-\begin{tabular}{|c|c|c|c|c|c|c|}
+\begin{tabular}{|p{0.75cm}|p{0.75cm}|p{0.75cm}|p{0.75cm}|p{0.75cm}|p{0.75cm}|p{0.75cm}|}
    \hline
   \multicolumn{3}{|c|}{} & 2 & 1 & 0 & 0\\
      \hline
@@ -133,7 +133,7 @@ x_{1}, x_{2} \geq 0
       \hline
 \end{tabular}
 
-\begin{tabular}{|c|c|c|c|c|c|c|}
+\begin{tabular}{|p{0.75cm}|p{0.75cm}|p{0.75cm}|p{0.75cm}|p{0.75cm}|p{0.75cm}|p{0.75cm}|}
    \hline
   \multicolumn{3}{|c|}{} & 2 & 1 & 0 & 0\\
    \hline
@@ -147,6 +147,7 @@ x_{1}, x_{2} \geq 0
       \hline
 \end{tabular}
 
+On dÃ©duit donc que $\frac{31}{3}= \frac{11}{3} x_{2} + x_{3} - \frac{2}{3} x_{4}$, d'oÃ¹ $\frac{11}{3} x_{2} - \frac[2}{3}x_{4} \geq \frac{1}{3} $.
 \end{enumerate}
 \subsection*{Partie Pratique}
 
@@ -154,6 +155,6 @@ x_{1}, x_{2} \geq 0
 
 \subsubsection*{2.2 Branch and Bound}
 
-\subsubsection*{2.3 Comparaisons entre un algorithme de complexité exponentielle et un FP-TAS}
+\subsubsection*{2.3 Comparaisons entre un algorithme de complexitÃ© exponentielle et un FP-TAS}
 
 \end{document}
