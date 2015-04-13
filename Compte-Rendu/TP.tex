@@ -8,6 +8,7 @@
 \usepackage{mathrsfs}
 \usepackage{float}
 \usepackage{pgfplots}
+\usepackage{enumerate}
 \usepackage{caption}
 \usepackage[ruled,vlined,french,onelanguage]{algorithm2e}
 \title{TP Méthode approchées UMIN215}
@@ -20,6 +21,132 @@
 
 \subsubsection*{Exercice 1 - Sur le problème de la couverture sommet minimale : trois approches différentes}
 
+\begin{enumerate}
+\item
+\begin{enumerate}[a)]
+\item On a :
+\begin{displaymath}
+x_{i} = \begin{cases} 
+0 \text{ si } x_{i} \notin S \\
+1 \text{ si } x_{i} \in S
+\end{cases}
+\end{displaymath}
+
+On peut donc déduire que le $(PL)$ donne bien une solution optimale. $z$ compte bien le nombre de sommets dans $S$. Si $(v_{r},v_{s}) \in E$, on a $x_{r}$ et $x_{s}$ qui valent $1$ : il faut qu'il y ait au moins un sommet couvre l'arête.
+
+\item On ne peut pas avoir $x_{s} + x_{r} = 1 $ car $v_{r}$ et $v_{s}$ peuvent tout deux appartenir à S.
+
+\item Soit une solution optimale, alors elle respecte les contraintes du $(PL)$ et correspond à un $z$ minimum: elle correspond donc à une solution du $(PL)$.
+
+\item Supposons qu'il existe $(v_{r},v_{s})\in E$ tel que $x_{r} < \frac{1}{2}$ et $x_{s} < \frac{1}{2}$, alors on aurait $x_{r} + x_{s} < 1$, ce qui viole une contrainte. Donc $x_{r} \geq \frac{1}{2}$ ou $x_{s} \geq \frac{1}{2}$.
+
+\item Soit $I$ une instance quelconque, alors on a $\rho = \frac{max(A(I))}{Opt(I)}$. Par ailleurs, on sait que :
+\begin{equation}
+ Opt(I) = S_{ILP}(I) 
+\end{equation}
+\begin{equation}
+ S_{LP}(I) \leq S_{ILP}(I)
+\end{equation}
+
+On peut déduire de $(2)$ que $\frac{1}{S_{LP}(I)} \geq \frac{1}{S_{ILP}(I)}$. Donc on arrive à l'inéquation suivante : $\frac{A(I)}{S_{LP}(I)} \geq \frac{A(I)}{Opt(I)}$. Notons que $A(I)$ est la solution obtenue en arrondissant la solution de $S_{LP}(I)$. \\
+On peut remarquer que puisqu'il existe $i$ tel que $x_{i} \geq \frac{1}{2} $, donc $2x_{i} \geq 1 $. On peut donc écrire : 
+
+\begin{equation}
+A(I) = \sum_{i, x_{i} \geq \frac{1}{2}} 1 \leq \sum_{i \in S^{*}} 2x_{i} \leq 2 \sum_{i=1}^{n} x_{i} = 2 Opt(I).
+\end{equation}
+
+On déduit finalement que $\frac{A(I)}{Opt(I)} = 2 $ et $\rho = \frac{max(A(I))}{Opt(I)} \leq 2 $
+Montrons que $\rho = 2$ en considérons le cas suivant : 
+
+\begin{figure}[H]
+\center
+\begin{tikzpicture}[-,>=stealth',shorten >=1pt,auto,node distance=3cm,
+  thick,main node/.style={circle,fill=blue!20,draw,font=\sffamily\Large\bfseries}]
+
+  \node[main node] (1) { $\frac{1}{2} $};
+  \node[main node] (2) [below left of=1] {  $\frac{1}{2} $};
+  \node[main node] (3) [below right of=2] {  $\frac{1}{2} $};
+  \node[main node] (4) [below right of=1] {  $\frac{1}{2} $};
+
+  \path[every node/.style={font=\sffamily\small}]
+    (1) edge [bend right] node[left] { }(2)
+    (2) edge [bend right] node[left] { }(3)
+    (3) edge [bend right] node[right] { }(4)
+    (4)edge [bend right] node[right] { } (1);
+\end{tikzpicture}
+\caption{Résultat donné par l'Algorithme 1 pour le problème Vertex cover.}
+\end{figure}
+
+On peut remarquer qu'ici, $A(I) = 4 $ alors que $Opt(I) = 2 $.
+
+\begin{figure}[H]
+\center
+\begin{tikzpicture}[-,>=stealth',shorten >=1pt,auto,node distance=3cm,
+  thick,main node/.style={circle,fill=blue!20,draw,font=\sffamily\Large\bfseries}]
+
+  \node[main node] (1) { 1 };
+  \node[main node] (2) [below left of=1] { 0};
+  \node[main node] (3) [below right of=2] {  1};
+  \node[main node] (4) [below right of=1] {  0};
+
+  \path[every node/.style={font=\sffamily\small}]
+    (1) edge [bend right] node[left] { }(2)
+    (2) edge [bend right] node[left] { }(3)
+    (3) edge [bend right] node[right] { }(4)
+    (4)edge [bend right] node[right] { } (1);
+\end{tikzpicture}
+\caption{Résultat optimal pour le problème Vertex cover.}
+\end{figure}
+
+On peut donc finalement conclure que $\rho = \frac{max(A(I))}{Opt{I}} = 2 $.
+
+\item 
+
+\begin{enumerate}[i)]
+\item Pour obtenir notre nouvel programme linéaire $(PL')$, il suffit simplement d'introduire les poids $w_{i} \in \mathbf{N}^{*}, i\in \{1, \dots , n \} $ et de poser $z = \sum_{j=1}^{n} w_{i} x_{i}$.
+
+\begin{displaymath}
+PL'\begin{cases} 
+\text{min } z = \sum_{j=1}^{n} w_{i} x_{i} \\
+x_{r} + x_{s} \geq 1, \forall \{v_{r},v_{s} \} \in E  \\
+x_{j} \in \{0,1\}, j \in \{1, \dots, n \}
+\end{cases}
+\end{displaymath}
+
+
+\item On peut remplacer le programme linéaire en nombre entiers $(PL')$ par un autre utilisant une matrice $A$. Pour un graphe $G=(V,E)$, la matrice $A$ utilisé dans le programme linéaire en nombres entiers possède les caractéristiques suivantes : 
+\begin{itemize}
+\item $A$ à $2*|E|$ lignes et $|V|$ colonnes.
+\item Chaque ligne apparaît deux fois dans la matrice.
+\item La matrice $A$ est constituée uniquement de $1$ et il n'y a que deux $1$ par ligne.
+\end{itemize}
+
+\begin{displaymath}
+PL'\begin{cases} 
+\text{min } z = \sum_{j=1}^{n} w_{i} x_{i} \\
+A *  \left( \begin{array}{c}
+x_1 \\
+\vdots \\
+x_n
+\end{array} \right) \geq  \left( \begin{array}{c}
+1 \\
+\vdots \\
+1
+\end{array} \right). \\
+
+x_{j} \in \{0,1\}, j \in \{1, \dots, n \}
+\end{cases}
+\end{displaymath}
+
+\item A terminer..
+\end{enumerate}
+\end{enumerate}
+
+\item \begin{enumerate}[a)]
+\item Dans les pires des cas, les deux sommets de chaque arêtes sont pris : $A(I) \geq 2*m$ avec $m = |E|$. De plus, il y a toujours, au moins un sommet par arête dans la solution optimale : $Opt(I) \geq n $. On peut donc écrire que $\frac{1}{Opt(I)} \leq n$ et donc que $\frac{A(I)}{Opt(I)} \leq 2 $.
+\end{enumerate}
+
+\end{enumerate}
 \subsubsection*{Exercice 2 - Sur le problème du couplage maximum de poids minimum : un début d'étude polyédrale sur le problème de couplage}
 
 \subsubsection*{Exercice 3 - Sur le problème de la coupe maximum}
@@ -155,22 +282,34 @@ Le tableau final donne :
 
 \begin{tabular}{|p{0.75cm}|p{0.75cm}|p{0.75cm}|p{0.75cm}|p{0.75cm}|p{0.75cm}|p{0.75cm}|p{0.75cm}|}
    \hline
-  \multicolumn{3}{|c|}{} & 2 & 1 & 0 & 0\\
+  \multicolumn{3}{|c|}{} & 2 & 1 & 0 & 0 & 0\\
    \hline
-   & && $x_{1}$&$x_{2}$ &$x_{3}$ &$x_{4}$ & $x_{5}$\\
+   & 	&	& $x_{1}$	&	$x_{2}$ 	&$x_{3}$ &$x_{4}$ & $x_{5}$\\
    \hline
-   0&$x_{3}$ &$\frac{31}{3}$& 0&$\frac{11}{3} $&1 &$\frac{-2}{3}$\\
-   \hline
-   2&$x_{1}$ & $\frac{10}{3}$ &1 & $\frac{2}{3}$&0 & $\frac{1}{3}$\\
-   \hline
-      & $z$& $\frac{20}{3}$&0 &$\frac{1}{3}$ &0 &$\frac{2}{3}$\\
+0&$x_{3}$& 10  &     0 &     0      &1      &0   &   1         \\
+2&$x_{1}$& $\frac{36}{11}$ &  1 &     0   &   0 &     $\frac{5}{11}$&   $\frac{2}{11}$    \\    
+1&$x_{2}$&  $\frac{1}{11} $ &  0    &  1     & 0     & $\frac{-2}{11} $ & $\frac{-3}{11}  $   \\  
+&z&  $\frac{73}{11}$&  0    &  0    &  0     & $\frac{8}{11} $ & $\frac{1}{11}$   \\
       \hline
 \end{tabular}
 
+On choisi l'équation $\frac{36}{11} = x_{1} + \frac{5}{11} x_{4} + \frac{2}{11}x_{5}$, on déduit donc $\frac{5}{11} x_{4} + \frac{2}{11}x_{5} \geq \frac{3}{11}$. Ce qui revient à écrire par l'équation précédente que $\frac{36}{11} - x_{1} \geq \frac{3}{11}$ et donc que $x_{1} \leq 3$. 
 
-=======
-On déduit donc que $\frac{31}{3}= \frac{11}{3} x_{2} + x_{3} - \frac{2}{3} x_{4}$, d'oÃ¹ $\frac{11}{3} x_{2} - \frac[2}{3}x_{4} \geq \frac{1}{3} $.
->>>>>>> origin/master
+\begin{tabular}{|p{0.75cm}|p{0.75cm}|p{0.75cm}|p{0.75cm}|p{0.75cm}|p{0.75cm}|p{0.75cm}|p{0.75cm}|p{0.75cm}|}
+   \hline
+  \multicolumn{3}{|c|}{} & 2 & 1 & 0 & 0 & 0 & 0\\
+   \hline
+   & 	&	& $x_{1}$	&	$x_{2}$ 	&$x_{3}$ &$x_{4}$ & $x_{5}$ & $x_{6}$\\
+   \hline
+0&$x_{3}$& $\frac{17}{2}$&     0 &     0      &1      &$\frac{-5}{2} $  &   0 & $\frac{11}{2}   $      \\
+0&$x_{4}$& $\frac{3}{2}$ &  0 &     0   &   0 &     $\frac{5}{2}$& 1 &  $\frac{-11}{2}$    \\    
+1&$x_{2}$&  $\frac{1}{2} $ &  0    &  1     & 0     & $\frac{1}{2} $ & 0 & $\frac{-3}{2} $  \\  
+2&$x_{1}$&  3                &  1    &  0    & 0     & 0 & 0& 1   \\  
+&z&  $\frac{13}{2}$           &  0    &  0    &  0     & $\frac{1}{2} $& 0 & $\frac{1}{2}$   \\
+      \hline
+\end{tabular}
+
+On sélectionne l'équation $\frac{1}{2} = x_{2} + \frac{1}{2} x_{4} - \frac{3}{2} x_{6}$. Donc on déduit que $\frac{1}{2} \leq \frac{-3}{2}x_{6}$
 \end{enumerate}
 \subsection*{Partie Pratique}
 
