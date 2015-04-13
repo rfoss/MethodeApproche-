@@ -5,6 +5,7 @@
 \usepackage{amsmath, amssymb}
 \usepackage{tikz}
 \usetikzlibrary{calc, shapes, backgrounds}
+\usetikzlibrary{positioning,chains,fit}
 \usetikzlibrary{arrows}
 \usepackage{mathrsfs}
 \usepackage{float}
@@ -190,7 +191,135 @@ On à ici $A(I) = 4$ alors que $Opt(I) = 2 $ donc $rho = \frac{max(A(I))}{Opt(I)}
 \end{enumerate}
 
 \end{enumerate}
-\subsubsection*{Exercice 2 - Sur le problème du couplage maximum de poids minimum : un début d'étude polyédrale sur le problème de couplage}
+\subsubsection*{Exercice 2 - Sur le problème du couplage maximum de poids maximum : un début d'étude polyédrale sur le problème de couplage}
+
+Dans cet exercice, nous travaillerons sur un graphe $G=(V,E)$ avec $|V| = n$ et $|E|= m$. Chaque arête $(i,j) \in E$ possède un poids que l'on not $w_{i,j}$.
+
+\begin{enumerate}
+\item On peut considérer le $(PL)$ suivant afin de modéliser le problème :
+
+\begin{displaymath}
+PL\begin{cases} 
+\text{max } z = \sum_{(i,j) \in E} w_{i,j} x_{i,j} \\
+\forall i \in \{1,\dots,n\}, \sum_{j \in V(i)} x_{i,j} \leq 1\\
+x_{j} \in \{0,1\}
+\end{cases}
+\end{displaymath}
+
+\item Considérons que le graphe de la figure 2 est le suivant :
+
+\begin{figure}[H]
+\center
+\begin{tikzpicture}[-,>=stealth',shorten >=1pt,auto,node distance=3cm,
+  thick,main node/.style={circle,fill=blue!20,draw,font=\sffamily\Large\bfseries}]
+
+  \node[main node] (1) { a };
+  \node[main node] (2) [below left of=1] { b};
+  \node[main node] (3) [below right of=1] {  c};
+
+  \path[every node/.style={font=\sffamily\small}]
+    (1) edge [right] node[left] {1}(2)
+    (2) edge [right] node[below] {1}(3)
+    (3)edge [right] node[right] {1} (1);
+\end{tikzpicture}
+\caption{Graphe représentant la figure 2.}
+\end{figure}
+
+Les équations des contraintes sont donc les suivantes :
+\begin{displaymath}
+\begin{cases} 
+x_{a,b} + x_{a,c} \leq 1 \\
+x_{a,c} + x_{b,c} \leq 1 \\
+x_{a,b} + x_{b,c} \leq 1
+\end{cases}
+\end{displaymath}
+
+\item Une solution optimale du programme linéaire en nombre entiers est $z=1$ avec $x_{a,b}=1$, $x_{b,c}=0$ et $x_{a,c}=0$.
+
+\item Une solution pour le même programme relaxé est $z=\frac{3}{2}$ avec $x_{a,b}=\frac{1}{2} $, $x_{b,c}=\frac{1}{2}$ et $x_{a,c}=\frac{1}{2}$.
+
+\item La formulation est mauvaise puisqu'avec une solution de $LP$, on ne peut pas retrouver une solution de $ILP$.
+
+\item Pour la figure 2, $\frac{|S| - 1}{2} = 1$. On rajoute donc la contrainte suivante : $\sum_{(i,j) \in E } x_{i,j} \leq 1 $. On remarque qu'avec cette contrainte, $z(ILP) = z(LP) = \frac{1}{3} + \frac{1}{3} + \frac{1}{3} = 1 $. Cette solution ne peut être le résultat du PL car ce n'est pas un point extrême, puisqu'il est combinaison linéaire des solutions $(1,0,0), (0,1,0)$ et $(0,0,1)$.
+
+\item 
+\begin{enumerate}[a)]
+\item Pour la première figure, les solutions admissibles sont $x_{e} = x_{f} = 1$; $x_{e} = 1$ et $x_{f} = 0$ ; $x_{e} = 0$ et $x_{f} = 1$ ; $x_{e} = x_{f} = 0$ 
+
+\pgfplotsset{vasymptote/.style={
+    before end axis/.append code={
+        \draw[-] ({rel axis cs:0,0} -| {axis cs:#1,0})
+        -- ({rel axis cs:0,1} -| {axis cs:#1,0});
+    }
+}}
+\begin{tikzpicture}[>=stealth]
+    \begin{axis}[
+        xmin=0,xmax=2,
+        ymin=0,ymax=2,
+        axis x line=middle,
+        axis y line=middle,
+        axis line style=->,
+        xlabel={$x_{e}$},
+        ylabel={$x_{f}$},
+        vasymptote=1,
+        ]
+        \addplot[no marks,black,-] expression[domain=0:2,samples=100]{1} 
+                    node[pos=0.65,anchor=south west]{};                     
+    \end{axis}
+\end{tikzpicture} \\
+Le polytope associé est défini par les points $(0,0)$, $(0,1)$, $(1,0)$ et $(1,1).$ \\
+
+Pour la deuxième figure, les différentes combinaisons possibles sont : $x_{e}=0, x_{f}=0, x_{g}=0$ ;  $x_{e}=0, x_{f}=0, x_{g}=1$; $x_{e}=0, x_{f}=1, x_{g}=0$; $x_{e}=1, x_{f}=1, x_{g}=0$ et $x_{e}=1, x_{f}=0, x_{g}=0$. Le polytope associé est une pyramide définie par une base carré ( $(0,0,0)$, $(0,1,0)$, $(1,0,0)$ et $(1,1,0).$) et un sommet ($(0,0,1)$).\\
+
+Le cas du triangle les combinaisons possibles sont : $x_{e}=0, x_{f}=0, x_{g}=0$ ; $x_{e}=0, x_{f}=0, x_{g}=1$ ; $x_{e}=0, x_{f}=1, x_{g}=0$ et $x_{e}=1, x_{f}=0, x_{g}=0$. Le polytope associé est une pyramide définie par une base triangulaire ( $(0,0,0)$, $(0,1,0)$ et $(1,0,0)$) et un sommet ($(0,0,1)$).
+
+\item Si $\lambda_{1} M_{1} + \lambda_{2} M_{2} + \lambda_{3} M_{3} = (\frac{1}{2}, \frac{1}{2}, \frac{1}{2})$ \\
+$\lambda_{1} (1,0,0) + \lambda_{2} (0,1,0) + \lambda_{3} (0,0,1)= (\frac{1}{2}, \frac{1}{2}, \frac{1}{2})$ \\
+alors $\lambda_{1} = \lambda_{2} = \lambda_{3} = \frac{1}{2}$ et donc $\sum_{i=1}^{3} \lambda_{i} = \frac{3}{2} > 1$. Le point n'appartient donc pas au polytope.
+
+\item Soit un point $x$ du polytope fractionnaire $FM$, alors $\exists \lambda_{1}, \dots , \lambda{m}, \exists M_{1}, \dots M_{m}$ tel que $\sum_{i=1}^{m} \lambda_{i} = 1$ et $\sum_{i=1}^{m} \lambda_{i} M_{i} = x$.\\
+Un graphe biparti n'est composé que de cycles pairs. Soit une solution optimale de LP.
+
+\definecolor{myblue}{RGB}{80,80,160}
+\definecolor{mygreen}{RGB}{80,160,80}
+
+\begin{tikzpicture}[thick,
+  every node/.style={draw,circle},
+  fsnode/.style={fill=myblue},
+  ssnode/.style={fill=mygreen},
+  every fit/.style={ellipse,draw,inner sep=-2pt,text width=2cm},
+  -,shorten >= 3pt,shorten <= 3pt
+]
+
+% the vertices of U
+\begin{scope}[start chain=going below,node distance=7mm]
+\foreach \i in {1,2,...,5}
+  \node[fsnode,on chain] (f\i) [label=left: $u_{\i}$] {};
+\end{scope}
+
+% the vertices of V
+\begin{scope}[xshift=4cm,yshift=-0.5cm,start chain=going below,node distance=7mm]
+\foreach \i in {1,2,...,5}
+  \node[ssnode,on chain] (s\i) [label=right: $v_{\i}$] {};
+\end{scope}
+
+% the set U
+\node [myblue,fit=(f1) (f5),label=above:$U$] {};
+% the set V
+\node [mygreen,fit=(s1) (s5),label=above:$V$] {};
+
+% the edges
+\draw (f1) -- (s2);
+\draw (f1) -- (s3);
+\draw (f2) -- (s2);
+\draw (f2) -- (s3);
+\end{tikzpicture}
+
+Considérons le cycle $(u_{1}, v_{2}, u_{2}, v_{3}, u_{1})$. \\
+On a forcément $x_{u_{1},v_{2}} + x_{u_{2},v_{3}} = x_{u_{1},v_{3}} + x_{u_{2},v_{2}}$ puisque l'on prend une arête sur deux le long du cycle. Donc on peut prendre $x'_{u_{1},v_{2}} = x_{u_{1},v_{2}} + x_{u_{1},v_{3}}$, $x'_{u_{2},v_{3}}= x_{u_{2},v_{3}} + x_{u_{2},v_{2}}$ et $x'_{u_{2},v_{2}} = x'_{u_{1},v_{3}} = 0 $. \\
+On répétant cette opération, on "casse" tous les cycles tout en gardant la même valeur pour la fonction objectif.
+\end{enumerate}
+\end{enumerate}
 
 \subsubsection*{Exercice 3 - Sur le problème de la coupe maximum}
 
