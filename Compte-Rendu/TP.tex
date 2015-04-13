@@ -2,8 +2,9 @@
 \usepackage[french]{babel}
 \usepackage[latin1]{inputenc}
 \usepackage{array}
-\usepackage{amsmath}
+\usepackage{amsmath, amssymb}
 \usepackage{tikz}
+\usetikzlibrary{calc, shapes, backgrounds}
 \usetikzlibrary{arrows}
 \usepackage{mathrsfs}
 \usepackage{float}
@@ -144,6 +145,48 @@ x_{j} \in \{0,1\}, j \in \{1, \dots, n \}
 
 \item \begin{enumerate}[a)]
 \item Dans les pires des cas, les deux sommets de chaque arêtes sont pris : $A(I) \geq 2*m$ avec $m = |E|$. De plus, il y a toujours, au moins un sommet par arête dans la solution optimale : $Opt(I) \geq n $. On peut donc écrire que $\frac{1}{Opt(I)} \leq n$ et donc que $\frac{A(I)}{Opt(I)} \leq 2 $.
+
+\item Considérons le graphe suivant :
+
+\begin{figure}[H]
+\center
+\begin{tikzpicture}[-,>=stealth',shorten >=1pt,auto,node distance=3cm,
+  thick,main node/.style={circle,fill=blue!20,draw,font=\sffamily\Large\bfseries}]
+
+  \node[main node] (1) { a };
+  \node[main node] (2) [below left of=1] { b};
+  \node[main node] (3) [below right of=2] {  c};
+  \node[main node] (4) [below right of=1] {  d};
+
+  \path[every node/.style={font=\sffamily\small}]
+    (1) edge [bend right] node[left] { }(2)
+    (2) edge [bend right] node[left] { }(3)
+    (3) edge [bend right] node[right] { }(4)
+    (4)edge [bend right] node[right] { } (1);
+\end{tikzpicture}
+\caption{Exemple d'instance pour lequel l'Algorithme 2 atteint la borne de deux.}
+\end{figure}
+
+On a donc $E' = ( \{a,b\}, \{a,d\}, \{b,c\}, \{c,d\} )$. 
+
+\begin{figure}[H]
+\center
+\begin{tabular}{|c|c|c|c|}
+\hline
+\text{étape} & E' & \text{arête sélectionné} & C \\
+\hline
+1 & \{ \{a,b\}, \{a,d\}, \{b,c\}, \{c,d\} \} & \{a,b\} & \{ \{a,b\} \}\\
+\hline
+2 & \{ \{c,d\} \} & \{c,d\} & \{ \{a,b\}, \{c,d\} \}\\
+\hline
+3 & $\emptyset$ & $\emptyset$ & \{ \{a,b\}, \{c,d\} \} \\
+\hline
+\end{tabular}
+\end{figure}
+
+On à ici $A(I) = 4$ alors que $Opt(I) = 2 $ donc $rho = \frac{max(A(I))}{Opt(I)} = 2 $.
+
+\item On commence par prendre les $\frac{k!}{k}$ sommets de degrés $k$ (les triangles), puis les $\frac{k!}{k-1}$ sommets de degrés $k-1$, etc.. On va donc prendre en tout $k! \sum_{i=0}^{k} \frac{1}{k-i} = k! \sum_{i=1}^{k} \frac{1}{i} = k! * H_{k}$, avec $H_{k}$ la k-ième somme partielle de la série harmonique. L'optimal est de prendre que les $k!$ sommets de degrés $k$ (les carrés). On a donc pour un $k$ fixé, $\frac{A(I)}{Opt(I)} = H_{k}$. Or si $k \rightarrow \infty$, $H_{k}$ diverge et tend vers $\infty$.
 \end{enumerate}
 
 \end{enumerate}
@@ -200,7 +243,7 @@ Le polytope associé aux équations de $PL_{0}$ est donc celui formé par les point
 
 \item On peut tracer la fonction objective :
 \begin{itemize}
-\item $y=-2x+k, k \in \mathbf{R}$
+\item $y=-2x+k, k \in \mathbf{R}$ (rouge)
 \end{itemize}
 
 \begin{tikzpicture}[>=stealth]
@@ -245,7 +288,7 @@ x_{1}, x_{2} \geq 0
 \end{cases}
 \end{displaymath}
 
-
+On obtient donc le tableau initial : \\
 \begin{tabular}{|p{0.75cm}|p{0.75cm}|p{0.75cm}|p{0.75cm}|p{0.75cm}|p{0.75cm}|p{0.75cm}|}
    \hline
   \multicolumn{3}{|c|}{} & 2 & 1 & 0 & 0\\
@@ -260,6 +303,8 @@ x_{1}, x_{2} \geq 0
       \hline
 \end{tabular}
 
+La variable entrante est $x_{1}$ et la variable sortante est $x_{4}$. 
+Le tableau final est donc : \\
 \begin{tabular}{|p{0.75cm}|p{0.75cm}|p{0.75cm}|p{0.75cm}|p{0.75cm}|p{0.75cm}|p{0.75cm}|}
    \hline
   \multicolumn{3}{|c|}{} & 2 & 1 & 0 & 0\\
@@ -274,6 +319,68 @@ x_{1}, x_{2} \geq 0
       \hline
 \end{tabular}
 
+La solution optimale est donc $x_{1}=\frac{10}{3}$ et $x_{2}={0}$ avec $z=\frac{20}{3}$.
+
+\item
+
+\begin{enumerate}[a)]
+\item
+
+On effectue notre Branch and Bound dans l'ordre : $x_{1}$ puis $x_{2}$. Puisque dans la solution optimale du $(PL)$, $x_{1} = \frac{20}{3}$, on a $x_{1} \leq 3$ ou que $x_{1} \geq 4 $. 
+\begin{itemize}
+\item Si l'on considère que $x_{1} \leq 3$, la solution optimale devient $z=\frac{13}{2}$ avec $x_{1}=3$ et $x_{2} = \frac{1}{2}$. On a ensuite, $x_{2} = 0$ ou $x_{2} > 0$. \\
+\begin{itemize}
+\item Si l'on considère que $x_{2}=0$, alors la solution optimale devient $z=6$ avec $x_{1}=3$ et $x_{2}=0$.
+\item Si l'on considère que $x_{2} \geq 1$, alors la solution optimale devient $z= \frac{19}{3} \approx 6.33$ avec $x_{1} = \frac{8}{3}$ et $x_{2} = 1$. On ne développe pas plus cette branche puisque l'on à déjà trouvé une solution avec $z=6$.
+\end{itemize}
+\item Si l'on considère que $x_{1} \geq 4$, la deuxième contrainte est violée.
+\end{itemize}
+L'arbre du Branch and bound récapitulatif est donné plus bas.
+
+\tikzset{
+  head/.style = {fill = orange!90!blue,
+                 label = center:\textsf{\Large H}},
+  tail/.style = {fill = blue!70!yellow, text = black,
+                 label = center:\textsf{\Large T}}
+}
+\begin{tikzpicture}[
+    scale = 1.5, transform shape, thick,
+    every node/.style = {draw, circle, minimum size = 10mm},
+    grow = down,  % alignment of characters
+    level 1/.style = {sibling distance=3cm},
+    level 2/.style = {sibling distance=4cm}, 
+    level 3/.style = {sibling distance=2cm}, 
+    level distance = 1.25cm
+  ]
+  \node[fill = gray!40, shape = rectangle, rounded corners,
+    minimum width = 6cm, font = \sffamily] { Valeur de $S_{LP}$} 
+  child { node[{fill = orange,
+                 label = center:\textsf{ $\frac{20}{3} $}}] (Start){}
+   child {   node [{fill = orange,
+                 label = center:\textsf{ $6.5_{1}$}}] (A) {}
+     child { node [{fill = orange,
+                 label = center:\textsf{ $6_{2}$}}] (B) {}}
+     child { node [{fill = orange,
+                 label = center:\textsf{ $(\frac{19}{3})_{3}$}}] (C) {}}
+   }
+   child {   node [{fill = orange,
+                 label = center:\textsf{ $\emptyset_{4}$}}] (D) {}}
+  };
+
+  % Labels des arêtes
+  \begin{scope}[nodes = {draw = none}]
+    \path (Start) -- (A) node [near start, left]  {$x_{1} \leq 3$};
+    \path (A)     -- (B) node [near start, left]  {$x_{2} =0 $};
+    \path (A)     -- (C) node [near start, right] {$x_{2} \geq 1$};
+    \path (Start) -- (D) node [near start, right] {$x_{1} \geq 4$};
+    \begin{scope}[nodes = {below = 11pt}]
+      \node            at (C) {Plus grand};
+      \node            at (D) {Contrainte violée};
+    \end{scope}
+  \end{scope}
+\end{tikzpicture}
+
+\item
 Puisque que l'on a $\frac{31}{3} = \frac{11}{3} x_{2} + x_{3} - \frac{2}{3} x_{4} $, on peut déduire que : $ \frac{11}{3} x_{2} - \frac{2}{3} x_{4} \geq \frac{1}{3} $. \\
 Puisque l'on a $\frac{10}{3} = x_{1} + \frac{2}{3} x_{2} + \frac{1}{3}x_{4}$ , on peut donc déduire que $x_{4}=10 - 3x_{1} - 2x_{2}$. \\
 On obtient finalement la contrainte : $2x_{1} + 5x_{2} \geq 7$. 
@@ -310,6 +417,7 @@ On choisi l'équation $\frac{36}{11} = x_{1} + \frac{5}{11} x_{4} + \frac{2}{11}x
 \end{tabular}
 
 On sélectionne l'équation $\frac{1}{2} = x_{2} + \frac{1}{2} x_{4} - \frac{3}{2} x_{6}$. Donc on déduit que $\frac{1}{2} \leq \frac{-3}{2}x_{6}$
+\end{enumerate}
 \end{enumerate}
 \subsection*{Partie Pratique}
 
