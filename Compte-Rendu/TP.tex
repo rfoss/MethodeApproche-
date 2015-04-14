@@ -19,8 +19,9 @@
 \begin{document}
 \maketitle
 
-\subsection*{Partie Théorique}
+\section{Partie Théorique}
 
+\subsection{Programmation linéaire en nombres entiers}
 \subsubsection*{Exercice 1 - Sur le problème de la couverture sommet minimale : trois approches différentes}
 
 \begin{enumerate}
@@ -321,6 +322,7 @@ On répétant cette opération, on "casse" tous les cycles tout en gardant la même 
 \end{enumerate}
 \end{enumerate}
 
+\subsection{Problèmes appartenant à la classe APX}
 \subsubsection*{Exercice 3 - Sur le problème de la coupe maximum}
 
 Dans cet exercice, nous travaillerons avec un graphe $G=(V,E)$ avec $|V|=n$ et $|E|=m$.
@@ -424,6 +426,9 @@ Déroulement de l'algorithme :
 
 L'algorithme s'arrête et renvoi donc cette coupe. Cependant on remarque que si l'on prend la coupe $(S,V-S)$ avec $S= \{a,c,f,h,i,k,n,p\}$, on obtient une coupe de taille 24.
 \end{enumerate}
+
+\subsection{Constructions de PTAS}
+
 \subsubsection*{Exercice 4 - Sur le problème de Partition}
 
 \subsubsection*{Exercice 5 - Sur le problème du sac à  dos simple}
@@ -491,6 +496,155 @@ Il s'agit donc bien d'un algorithme PTAS.
 \end{enumerate}
 \end{enumerate}
 \end{enumerate}
+\end{enumerate}
+
+\subsection{Construction d'un FPTAS : le problème de la somme d'un sous-ensemble}
+\subsubsection{Un algorithme de complexité exponentielle}
+
+\begin{enumerate}
+\item Si les deux liste $L$ et $L'$ sont triés alors la procédure $FUSIONNER-LISTES(L,L')$ s'effectue en $O(n)$ où $n= max( taille(L), taille(L'))$. En effet, il suffit de parcourir les deux listes en prenant à chaque fois le plus petit élément.
+
+\item La trace de l'algorithme pour $S= \{1,4,5\} $ et $n=3$ est effectué dans le tableau suivant :
+
+\begin{figure}[H]
+\center
+\begin{tabular}{|c|c|c|c|}
+\hline
+\text{i} & $L_{i-1}$ &  $x_{i}$ &$L_{i}$  \\
+\hline
+1 & \{0\} & 1 & \{0,1\} \\
+\hline
+2 & \{0,1\}& 4 & \{0, 1 , 4 , 5 \}\\
+\hline
+3 & \{0, 1 , 4 , 5 \} & 5 & \{0,1,4,5,6,9,10\}\\
+\hline
+\end{tabular}
+\end{figure}
+L'algorithme retourne 10.
+
+\item On note $P_{i}$ l'ensemble des valeurs pouvant être obtenues en faisant la somme de tous les éléments d'un sous ensemble de $\{x_{1},\dots , x_{i} \}$. Il est évident de voir que $P_{i} = P_{i-1} \cup (P_{i-1} + x_{i})$.
+En effet si l'on note $S_{i}$ l'ensemble des éléments de $P_{i}$ utilisant l'élément $x_{i}$ et $S'_{i}$ les éléments de $P_{i}$ n'utilisant pas $x_{i}$ alors on a $P_{i} = S_{i} \cup S'_{i}$. Et on remarque facilement que $S_{i} = P_{i-1} + x_{i}$ et que $S'_{i} = P_{i-1}$. \\
+Montrons par récurrence sur $i$ que la liste $L_{i}$ est une liste tirée contenant tous les éléments de $P_{i}$ dont la valeur n'est pas supérieure à t.
+\begin{itemize}
+\item Pour $i=0$, il n'y a qu'un élément dans $L_{0}$, donc cette liste est triée.
+\item Supposons que $L_{i\in \{1,\dots,n-1\} }$ soit triée, montrons que la liste $L_{i+1}$ reste triée. Il est évident que $L_{i} + x_{i+1}$ est triée, on peut donc appeler la procédure $FUSIONNER-LISTES(L_{i},L_{i}+x_{i+1})$ qui nous rend une liste triée. On supprime ensuite tout les éléments supérieurs à $t$, ce qui nous garantie que la liste $L_{i+1}$ est triée et ne contient pas d'éléments supérieurs à t. \\
+\end{itemize}
+La longueur maximale de la liste $L_{i}$ est $2^{i}$. En effet, dans le pire des cas, $L_{i-1} \cap (L_{i-1} + x_{i}) = \emptyset$ pour tout $i\in \{1,\dots, n\}$, et donc la taille de $L_{i}$ est doublée à chaque itération. \\
+On peut donc conclure sur la complexité exponentielle de l'algorithme, en effet, pour fusionner l'ensemble des listes on a une complexité en $\sum_{1}^{n} i*2^{i} \approx n* 2^{n+1} $  et donc $O(2^{n}).$
+\end{enumerate}
+
+\subsubsection{Un schéma d'approximation en temps entièrement polynomial}
+
+\begin{enumerate}
+\item Le déroulement des calculs est présenté dans le tableau suivant :
+
+\begin{figure}[H]
+\center
+\begin{tabular}{|c|c|c|}
+\hline
+
+$y_{i}$ & Existe t'il $z$ tel que $\frac{y-z}{y} \leq \delta$ & L' \\
+\hline
+10 & non & [ 10 ] \\
+\hline
+11 & oui & [ 10 ] \\
+\hline
+12 & non & [ 10 , 12] \\
+\hline
+15 & non & [ 10 , 12, 15] \\
+\hline
+20 & non & [ 10 , 12, 15, 20] \\
+\hline
+21 & oui & [ 10 , 12, 15, 20] \\
+\hline
+22 & oui & [ 10 , 12, 15, 20] \\
+\hline
+23 & non & [ 10 , 12, 15, 20, 23] \\
+\hline
+24 & oui & [ 10 , 12, 15, 20, 23] \\
+\hline
+29 & non & [ 10 , 12, 15, 20, 23, 29] \\
+\hline
+\end{tabular}
+\end{figure}
+L'algorithme renvoie $L' = [10, 12, 15, 20, 23, 29 ]$.
+
+\item Question ?
+
+\item On applique l'algorithme sur une liste $L=[ 104, 102, 201, 101 ]$ avec $t=308$ et $\epsilon = 0.2$. La trace de l'algorithme est donné dans le tableau suivant :
+ 
+ \begin{figure}[H]
+\center
+\begin{tabular}{|c|c|c|c|}
+\hline
+
+$L_{i-1}$& $x_{i}$ & $L_{i}$ & $L_{i}$ après SEUILLER($L_{i}, 0.05$)\\
+\hline
+[ 0 ] & 104 & [ 0 , 104 ] & [ 0 , 104 ] \\
+\hline
+[ 0 , 104 ] & 102 & [ 0 , 102 , 104 , 206] & [0 , 102, 206]\\
+\hline
+[0 , 102, 206] & 201 & [0 , 102, 201, 206, 303, 407] & [0, 102, 201, 303] \\
+\hline
+[0, 102, 201, 303]  & 101 & [0, 101, 102, 201, 203, 302, 303, 404 ] & [0, 101, 201, 302] \\
+\hline
+\end{tabular}
+\end{figure}
+L'algorithme rend 302.
+
+\item Soit $C^*$ la valeur d'une solution optimale et $C$ la valeur de la solution donnée par notre algorithme.
+\begin{enumerate}[a)]
+\item Montrons par récurrence sur $i$ que $\forall y \in P_{i}, y\leq t, \exists z \in L_{i}$ tel que  $(1 - \frac{\epsilon}{n})^{i}y^{*} \leq z \leq y^{*}$.
+\begin{itemize}
+\item Pour $i=1$, $\forall y \exists z$ tel que $(1- \delta)y \leq z \leq y$ par définition du seuillage.
+\item Supposons que $\forall y \exists z, ( 1 - \frac{\epsilon}{n})^{i} y \leq z \leq y $. Alors soit :
+	\begin{itemize}
+	\item $y \in P_{i}$. Si le $z$ précédent à été supprimé, alors $\exists z', (1 - \frac{\epsilon}{n})z \leq z' \leq z $. Donc $(1 - \frac{\epsilon}{n})^{i+1}y \leq z ( 1 - \frac{\epsilon}{n}) \leq z' \leq z \leq y$ sinon $(1 - \frac{\epsilon}{n})^{i+1}y \leq (1 - \frac{\epsilon}{n})^{i}y = z \leq y. $Cela reste vrai.
+	\item $y \notin P_{i}$. $y=y' + x_{i+1}$ avec $y' \in P_{i}$ et  $\exists z', (1 - \frac{\epsilon}{n})^{i}y' \leq z' \leq y'$.
+	\begin{itemize}
+	\item Si $z' + x_{i+1} \in P_{i+1},$ 
+	\begin{equation*}
+		(1 - \frac{\epsilon}{n})^{i} y' + x_{i+1} \leq z' + x_{i+1} \leq y' + x_{i+1}
+	\end{equation*}
+	\begin{equation*}
+		(1- \frac{\epsilon}{n})^{i} (y' + x_{i+1}) \leq (1 - \frac{\epsilon}{n})^{i}y' + x_{i+1} \leq z' + x_{i+1}
+	\end{equation*}
+	\begin{equation*}
+		(1-\frac{\epsilon}{n})^{i+1} \leq (1- \frac{\epsilon}{n})^{i} y \leq z \leq y
+	\end{equation*}
+	\item Sinon :
+	\begin{equation*}
+		\exists z, (1 - \frac{\epsilon}{n})(z' + x_{i+1}) \leq z \leq z' + x_{i+1}
+	\end{equation*}
+	\begin{equation*}
+		(1 - \frac{\epsilon}{n})^{i}y' + x_{i+1} \leq z' + x_{i+1} \leq y' + x_{i+1}
+	\end{equation*}
+	\begin{equation*}
+		(1 - \frac{\epsilon}{n})^{i+1} (y' + x_{i+1}) \leq (1- \frac{\epsilon}{n})^{i+1}y' + (1 - \frac{\epsilon}{n}) x_{i+1} \leq (1- \frac{\epsilon}{n})z' + x_{i+1} \leq z \leq z' + x_{i+1} \leq y' + x_{i+1}
+	\end{equation*}
+	\begin{equation*}
+		(1 - \frac{\epsilon}{n})^{i+1} y \leq z \leq y	
+	\end{equation*}
+	En particulier, $(1 - \frac{\epsilon}{n})^{n}y^{*} \leq z \leq y^{*}$ donc $1 \geq \frac{z}{y*} \geq (1 - \frac{\epsilon}{n})^{n}$
+	\end{itemize}	
+	\end{itemize}
+\end{itemize}
+\end{enumerate}
+
+\item \begin{enumerate}[a)]
+\item Si on a $\frac{z}{z'} \leq \frac{1}{1- \frac{\epsilon}{n}},$ alors $z(1 - \frac{\epsilon}{n}) \leq z ,$ on aurait donc supprimé $z$.
+\item Supposons que le $1^{er}$ élément est 1 et le dernier élément $t$. 
+\begin{equation*}
+	\frac{z_{1}}{z_{2}} * \frac{z_{2}}{z_{3}}* \dots* \frac{z_{n-1}}{z_{n}} = t	
+\end{equation*}
+\begin{equation*}
+	nlog(\frac{1}{1 - \frac{\epsilon}{n}}) \leq log( \frac{z_{1}}{z_{2}}) + \dots + log(\frac{z_{n-1}}{z_{n}}) = log(t)	
+\end{equation*}
+\begin{equation*}
+	n\leq \frac{ log(t) }{ - log(1 - \frac{\epsilon}{n})} \text{ donc } n \leq \frac{ln(t)}{- ln(1 - \frac{\epsilon}{n})}
+\end{equation*}
+\end{enumerate}
+
 \end{enumerate}
 
 \subsubsection*{Exercice 6 - Programmation dynamique}
@@ -714,12 +868,13 @@ On choisi l'équation $\frac{36}{11} = x_{1} + \frac{5}{11} x_{4} + \frac{2}{11}x
 On sélectionne l'équation $\frac{1}{2} = x_{2} + \frac{1}{2} x_{4} - \frac{3}{2} x_{6}$. Donc on déduit que $\frac{1}{2} \leq \frac{-3}{2}x_{6}$
 \end{enumerate}
 \end{enumerate}
-\subsection*{Partie Pratique}
 
-\subsubsection*{2.1 Programmation dynamique}
+\section{Partie Pratique}
 
-\subsubsection*{2.2 Branch and Bound}
+\subsection{Programmation dynamique}
 
-\subsubsection*{2.3 Comparaisons entre un algorithme de complexité exponentielle et un FP-TAS}
+\subsection{Branch and Bound}
+
+\subsection{Comparaisons entre un algorithme de complexité exponentielle et un FP-TAS}
 
 \end{document}

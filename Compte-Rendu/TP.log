@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014) (preloaded format=pdflatex 2014.10.6)  14 APR 2015 16:35
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014) (preloaded format=pdflatex 2014.10.6)  14 APR 2015 23:45
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -866,7 +866,7 @@ LaTeX Font Info:    Try loading font information for U+rsfs on input line 20.
 (/usr/local/texlive/2014/texmf-dist/tex/latex/jknapltx/ursfs.fd
 File: ursfs.fd 1998/03/24 rsfs font definition file (jk)
 )
-Overfull \hbox (12.31154pt too wide) in paragraph at lines 53--55
+Overfull \hbox (12.31154pt too wide) in paragraph at lines 54--56
 []\OT1/cmr/m/n/10 On peut d^^Seduire de $(2)$ que $[] \OMS/cmsy/m/n/10 ^^U []$\
 OT1/cmr/m/n/10 . Donc on ar-rive ^^Ra l'in^^Sequation
  []
@@ -875,15 +875,15 @@ OT1/cmr/m/n/10 . Donc on ar-rive ^^Ra l'in^^Sequation
 
 {/usr/local/texlive/2014/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
 [2]
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 179.
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 180.
 
  (/usr/local/texlive/2014/texmf-dist/tex/latex/base/omscmr.fd
 File: omscmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 179.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 180.
  [3]
-Overfull \hbox (7.40474pt too wide) in paragraph at lines 243--244
+Overfull \hbox (7.40474pt too wide) in paragraph at lines 244--245
 [][] \OML/cmm/m/it/10 x[] \OMS/cmsy/m/n/10 ^^T \OT1/cmr/m/n/10 1$. On re-marque
  qu'avec cette contrainte, $\OML/cmm/m/it/10 z\OT1/cmr/m/n/10 (\OML/cmm/m/it/10
  ILP\OT1/cmr/m/n/10 ) = \OML/cmm/m/it/10 z\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 LP\
@@ -891,17 +891,17 @@ OT1/cmr/m/n/10 ) =
  []
 
 [4]
-Underfull \hbox (badness 10000) in paragraph at lines 269--271
+Underfull \hbox (badness 10000) in paragraph at lines 270--272
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 272--273
+Underfull \hbox (badness 10000) in paragraph at lines 273--274
 
  []
 
 
-Overfull \hbox (29.21794pt too wide) in paragraph at lines 280--282
+Overfull \hbox (29.21794pt too wide) in paragraph at lines 281--283
 []\OT1/cmr/m/n/10 Soit un point $\OML/cmm/m/it/10 x$ \OT1/cmr/m/n/10 du po-ly-t
 ope frac-tion-naire $\OML/cmm/m/it/10 FM$\OT1/cmr/m/n/10 , alors $\OMS/cmsy/m/n
 /10 9\OML/cmm/m/it/10 ^^U[]; [] ; ^^Um; \OMS/cmsy/m/n/10 9\OML/cmm/m/it/10 M[];
@@ -909,62 +909,85 @@ ope frac-tion-naire $\OML/cmm/m/it/10 FM$\OT1/cmr/m/n/10 , alors $\OMS/cmsy/m/n
  []
 
 [5]
-Underfull \hbox (badness 10000) in paragraph at lines 330--331
+Underfull \hbox (badness 10000) in paragraph at lines 332--333
 
- []
-
-
-Overfull \hbox (87.65817pt too wide) in paragraph at lines 337--337
-[] 
  []
 
 [6]
-Overfull \hbox (58.61191pt too wide) in paragraph at lines 396--423
+Overfull \hbox (87.65817pt too wide) in paragraph at lines 339--339
+[] 
+ []
+
+
+Overfull \hbox (58.61191pt too wide) in paragraph at lines 398--425
  [] 
  []
 
 [7]
-Underfull \hbox (badness 10000) in paragraph at lines 440--441
+Underfull \hbox (badness 10000) in paragraph at lines 445--446
 
  []
 
 
-Overfull \hbox (8.2632pt too wide) in paragraph at lines 443--444
+Overfull \hbox (8.2632pt too wide) in paragraph at lines 448--449
 []\OT1/cmr/m/n/10 Montrons main-te-nant que dans le deuxi^^Reme cas, on a forc^
 ^Sement $\OML/cmm/m/it/10 cost\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 T\OT1/cmr/m/n/1
 0 ) \OMS/cmsy/m/n/10 ^^U
  []
 
 
-Overfull \hbox (3.58273pt too wide) in paragraph at lines 455--456
+Overfull \hbox (3.58273pt too wide) in paragraph at lines 460--461
 \OT1/cmr/m/n/10 Soit $\OML/cmm/m/it/10 I$ \OT1/cmr/m/n/10 une ins-tance quel-co
 nque du probl^^Reme du sac ^^Ra dos. Alors $\OML/cmm/m/it/10 Opt\OT1/cmr/m/n/10
  (\OML/cmm/m/it/10 I\OT1/cmr/m/n/10 ) \OMS/cmsy/m/n/10 ^^T
  []
 
 
-Overfull \hbox (88.3659pt too wide) detected at line 465
+Overfull \hbox (88.3659pt too wide) detected at line 470
 \OML/cmm/m/it/10 N \OT1/cmr/m/n/10 = [] [] = \OML/cmm/m/it/10 n\OT1/cmr/m/n/10 
 !([] + [] + []) = \OML/cmm/m/it/10 n \OT1/cmr/m/n/10 + [] + [] + []
  []
 
-[8] [9] [10]
-Underfull \hbox (badness 10000) in paragraph at lines 626--627
+[8] [9]
+Underfull \hbox (badness 10000) in paragraph at lines 530--531
 
  []
 
 
-Overfull \hbox (1.60406pt too wide) in paragraph at lines 676--677
+Overfull \hbox (85.49268pt too wide) in paragraph at lines 578--592
+ [] 
+ []
+
+[10]
+Overfull \hbox (130.8939pt too wide) detected at line 624
+\OT1/cmr/m/n/10 (1 \OMS/cmsy/m/n/10 ^^@ []\OT1/cmr/m/n/10 )[](\OML/cmm/m/it/10 
+y[] \OT1/cmr/m/n/10 + \OML/cmm/m/it/10 x[]\OT1/cmr/m/n/10 ) \OMS/cmsy/m/n/10 ^^
+T \OT1/cmr/m/n/10 (1 \OMS/cmsy/m/n/10 ^^@ []\OT1/cmr/m/n/10 )[]\OML/cmm/m/it/10
+ y[] \OT1/cmr/m/n/10 + (1 \OMS/cmsy/m/n/10 ^^@ []\OT1/cmr/m/n/10 )\OML/cmm/m/it
+/10 x[] \OMS/cmsy/m/n/10 ^^T \OT1/cmr/m/n/10 (1 \OMS/cmsy/m/n/10 ^^@ []\OT1/cmr
+/m/n/10 )\OML/cmm/m/it/10 z[] \OT1/cmr/m/n/10 + \OML/cmm/m/it/10 x[] \OMS/cmsy/
+m/n/10 ^^T \OML/cmm/m/it/10 z \OMS/cmsy/m/n/10 ^^T \OML/cmm/m/it/10 z[] \OT1/cm
+r/m/n/10 + \OML/cmm/m/it/10 x[] \OMS/cmsy/m/n/10 ^^T \OML/cmm/m/it/10 y[] \OT1/
+cmr/m/n/10 + \OML/cmm/m/it/10 x[]
+ []
+
+[11] [12] [13]
+Underfull \hbox (badness 10000) in paragraph at lines 780--781
+
+ []
+
+
+Overfull \hbox (1.60406pt too wide) in paragraph at lines 830--831
 [][] 
  []
 
-[11] [12] [13] (./TP.aux) ) 
+[14] [15] [16] (./TP.aux) ) 
 Here is how much of TeX's memory you used:
- 27805 strings out of 493117
- 677076 string characters out of 6135433
- 895073 words of memory out of 5000000
- 30777 multiletter control sequences out of 15000+600000
- 16023 words of font info for 64 fonts, out of 8000000 for 9000
+ 27808 strings out of 493117
+ 677116 string characters out of 6135433
+ 895150 words of memory out of 5000000
+ 30780 multiletter control sequences out of 15000+600000
+ 16330 words of font info for 65 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  62i,14n,100p,720b,2265s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/local/texlive/2014/texmf-dist/fonts/type1/publ
@@ -986,10 +1009,10 @@ pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmssbx10
 pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy5.pf
 b></usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb>
 
-Output written on TP.pdf (13 pages, 248566 bytes).
+Output written on TP.pdf (16 pages, 265400 bytes).
 PDF statistics:
- 122 PDF objects out of 1000 (max. 8388607)
- 88 compressed objects within 1 object stream
+ 131 PDF objects out of 1000 (max. 8388607)
+ 94 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  13 words of extra memory for PDF output out of 10000 (max. 10000000)
 
