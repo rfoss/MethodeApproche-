@@ -323,6 +323,107 @@ On répétant cette opération, on "casse" tous les cycles tout en gardant la même 
 
 \subsubsection*{Exercice 3 - Sur le problème de la coupe maximum}
 
+Dans cet exercice, nous travaillerons avec un graphe $G=(V,E)$ avec $|V|=n$ et $|E|=m$.
+\begin{enumerate}
+\item La boucle $while$ ne peut s'effectuer plus de $n$ fois puisqu'à chaque tour de boucle, nous déplaçons un sommet de l'autre côté de la coupe. Puis pour trouver un sommet qui augmente la valeur de la coupe, on parcours potentiellement tout les sommet $O(n)$ puis l'on doit calculer le nombre d'arcs dans la coupe et hors de la coupe $O(n^{2})$. On obtient en tout du $O(n^{3}).$
+
+\item Soit $(Y_{1},Y_{2})$ la coupe rendue par l'algorithme. Montrons par l'absurde que $\forall v \in Y_{1}, |Voisins(v) \cap Y_{1} | \leq |Voisins(v) \cap Y_{2} |$. Supposons qu'il existe un sommet $v \in Y_{1}, |Voisins(v) \cap Y_{1} | > |Voisins(v) \cap Y_{2} |$, alors on pourrait déplacer ce sommet de l'autre côté de la coupe et augmenter la valeur de celle-ci de $ |Voisins(v) \cap Y_{1} | - |Voisins(v) \cap Y_{2} | > 0$. Ce qui contredit le fait que $(Y_{1},Y_{2})$ soit le résultat de l'algorithme. \\
+
+Il nous reste à montrer que l'Algorithme est 2-approché. Posons $C$ la coupe optimale et $(Y_{1},Y_{2})$ la coupe rendue par l'algorithme. On peut donc écrire que : 
+
+\begin{align*}
+|C| &= | \{ \text{Arêtes de} Y_{1} \text{ dans }Y{1} \in C\} | + | \{ \text{Arêtes de} Y_{1} \text{ dans }Y{2} \in C\} | + | \{ \text{Arêtes de} Y_{2} \text{ dans }Y{2} \in C\} | \\
+  &\leq ...
+\end{align*}
+
+\item Considérons le graphe suivant :
+
+\begin{figure}[h]
+\center
+\begin{tikzpicture}[-,>=stealth',shorten >=1pt,auto,node distance=1cm,
+  thick,main node/.style={circle,fill=blue!20,draw,font=\sffamily\bfseries}]
+
+  \node[main node] (1) {a};
+  \node[main node] (2) [right of=1] {b};
+  \node[main node] (3) [right of=2] {c};
+  \node[main node] (4) [right of=3] {d};
+  \node[main node] (5) [below of=1] {e};
+    \node[main node] (6) [right of=5] {f};
+      \node[main node] (7) [right of=6] {g};
+        \node[main node] (8) [right of=7] {h};
+          \node[main node] (9) [below of=5] {i};
+            \node[main node] (10) [right of=9] {j};
+              \node[main node] (11) [right of=10] {k};
+                \node[main node] (12) [right of=11] {l};
+                  \node[main node] (13) [below of=9] {m};
+                    \node[main node] (14) [right of=13] {n};
+                      \node[main node] (15) [right of=14] {o};
+                        \node[main node] (16) [right of=15] {p};
+                        
+  \path[every node/.style={font=\sffamily\small}]
+    (1) edge node [right] {} (2)
+    edge node [right] {} (5)
+    (2) edge node [right] {} (3)
+    edge node [right] {} (6)
+    (3) edge node [right] {} (4)
+ 	edge node [right] {} (7)
+    (4) edge node [right] {} (8)
+    (5) edge node [right] {} (6)
+    	edge node [right] {} (9)
+	(6) edge node [right] {} (7)
+	edge node [right] {} (10)
+	(7) edge node [right] {} (8)
+	edge node [right] {} (11)
+	(8) edge node [right] {} (12)
+	(9)edge node [right] {} (10)
+	edge node [right] {} (13)
+	(10) edge node [right] {} (11)
+	edge node [right] {} (14)
+	(11) edge node [right] {} (12)
+	edge node [right] {} (15)
+	(12) edge node [right] {} (16)
+	(13) edge node [right] {} (14)
+	(14) edge node [right] {} (15)
+	(15) edge node [right] {} (16);
+\end{tikzpicture}
+\caption {Exemple pour lequel l'algorithme atteint sa borne.}
+\end{figure}
+
+Déroulement de l'algorithme :
+
+\begin{figure}[H]
+\center
+\begin{tabular}{|c|c|c|c|}
+\hline
+\text{étape} & S & V - S & \text{Taille de la coupe (S, V-S)} \\
+\hline
+1 & $\emptyset$ & \{a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p\} & 0 \\
+\hline
+2 & \{a \} & \{b,c,d,e,f,g,h,i,j,k,l,m,n,o,p\} & 2 \\
+\hline
+3 & \{a, b \} & \{c,d,e,f,g,h,i,j,k,l,m,n,o,p\} & 3 \\
+\hline
+4 & \{a,b,c \} & \{d,e,f,g,h,i,j,k,l,m,n,o,p\} & 4 \\
+\hline
+5 & \{a,b,c,e \} & \{d,f,g,h,i,j,k,l,m,n,o,p\} & 5 \\
+\hline
+6 & \{a,b,c,e,i \} & \{d,f,g,h,j,k,l,m,n,o,p\} & 6 \\
+\hline
+7 & \{a,b,c,e,i,p \} & \{d,f,g,h,j,k,l,m,n,o\} & 8 \\
+\hline
+8 & \{a,b,c,e,i,p,l \} & \{d,f,g,h,j,k,m,n,o\} & 9 \\
+\hline
+9 & \{a,b,c,e,i,p,l,h \} & \{d,f,g,j,k,m,n,o\} & 10 \\
+\hline
+10 & \{a,b,c,e,i,p,l,h,o \} & \{d,f,g,j,k,m,n\} & 11 \\
+\hline
+11 & \{a,b,c,e,i,p,l,h,o,n \} & \{d,f,g,j,k,m\} & 12 \\
+\hline
+\end{tabular}
+\end{figure}
+
+L'algorithme s'arrête et renvoi donc cette coupe. Cependant on remarque que si l'on prend la coupe $(S,V-S)$ avec $S= \{a,c,f,h,i,k,n,p\}$, on obtient une coupe de taille 24.
+\end{enumerate}
 \subsubsection*{Exercice 4 - Sur le problème de Partition}
 
 \subsubsection*{Exercice 5 - Sur le problème du sac à  dos simple}
