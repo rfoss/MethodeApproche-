@@ -185,7 +185,7 @@ On a donc $E' = ( \{a,b\}, \{a,d\}, \{b,c\}, \{c,d\} )$.
 \end{tabular}
 \end{figure}
 
-On à ici $A(I) = 4$ alors que $Opt(I) = 2 $ donc $rho = \frac{max(A(I))}{Opt(I)} = 2 $.
+On à ici $A(I) = 4$ alors que $Opt(I) = 2 $ donc $\rho = \frac{max(A(I))}{Opt(I)} = 2 $.
 
 \item On commence par prendre les $\frac{k!}{k}$ sommets de degrés $k$ (les triangles), puis les $\frac{k!}{k-1}$ sommets de degrés $k-1$, etc.. On va donc prendre en tout $k! \sum_{i=0}^{k} \frac{1}{k-i} = k! \sum_{i=1}^{k} \frac{1}{i} = k! * H_{k}$, avec $H_{k}$ la k-ième somme partielle de la série harmonique. L'optimal est de prendre que les $k!$ sommets de degrés $k$ (les carrés). On a donc pour un $k$ fixé, $\frac{A(I)}{Opt(I)} = H_{k}$. Or si $k \rightarrow \infty$, $H_{k}$ diverge et tend vers $\infty$.
 \end{enumerate}
@@ -427,6 +427,39 @@ L'algorithme s'arrête et renvoi donc cette coupe. Cependant on remarque que si l
 \subsubsection*{Exercice 4 - Sur le problème de Partition}
 
 \subsubsection*{Exercice 5 - Sur le problème du sac à  dos simple}
+
+Soit $w_{1}, \dots, w_{n}$ les poids de $n$ objets, $b$ la capacité du sac à dos. On cherche à trouver $T \subseteq \{1, \dots, n \}$ tel que $\sum_{i \in T } w_{i}$ soit maximum.
+
+\begin{enumerate}
+\item \begin{enumerate}[a)]
+\item Trier les $w_{i}, i \in \{1, \dots, n\}$ peut se faire en $O(n log(n))$. On répète la boucle $n$ fois et les éléments à l'intérieur s'effectuent en $O(1)$. On peut donc conclure que l'algorithme s'effectue en $O(n log(n))$.
+
+\item On peut distinguer deux cas :
+\begin{itemize}
+\item Si $\sum_{i=1}^{n} w_{i} \leq b $, alors on peut mettre tous les objets dans le sac à dos. Donc $T= \{1, \dots, n\}$ et le cas se résout trivialement.
+\item Si par contre $\sum_{i=1}^{n} w_{i} > b $, on peut démontrer par l'absurde qu'il existe $j$ tel que $cost(T) + w_{j+1} > b$. Supposons qu'un tel élément n'existe pas, alors à chaque étape de la boucle, l'élément $i$ est ajouté à $T$. En particulier si $i=n$, on rajoute l'élément $n$ à $T$ puisque $cost(T) + w_{n} = \sum_{i=1}^{n} w_{i} \leq b$, ce qui est absurde. \\
+\end{itemize}
+
+Montrons maintenant que dans le deuxième cas, on a forcément $cost(T) \geq \frac{b}{2}$. Etudions les trois cas possibles: 
+\begin{itemize}
+\item On ne peut pas avoir $j=0$ puisque $b \geq w_{1}$.
+\item Si $j=1$, alors on a $w_{1} + w_{2} > b$ or on sait que $w_{1} \geq w_{2}$ et donc $2w_{1} \geq w_{1} + w_{2} > b$, d'où $cost(T) = w_{1} \geq \frac{b}{2}.$
+\item Si $j\geq 2$ , on a alors $T=\{1,\dots,j\}$ d'après la démonstration précédente. $cost(T)= \sum_{i \in T } w_{i}\leq b$ et $cost(T) + w_{j+1} > b$. Supposons par l'absurde que $cost(T) < \frac{b}{2}$ alors on aurait :
+
+\begin{equation*}
+	w_{j+1} + \frac{b}{2} > cost(T) + w_{j+1} > b
+\end{equation*}
+On conclut que $w_{j+1} > \frac{b}{2}$, et puisque $j \geq 2$ alors $cost(T) \geq w_{1} + w_{2} \geq 2 w_{j+1} > b$. C'est une contradiction.
+\end{itemize}
+
+\item Montrons que l'algorithme admet une performance relative de deux. Soit $I$ une instance quelconque du problème du sac à dos. Alors $Opt(I) \leq b$. Notre algorithme nous assure une solution $A(I) \geq \frac{b}{2}$ d'après la question précédente. On a alors :
+\begin{equation*}
+	\frac{A(I)}{Opt(I)} \geq \frac{b}{2} * \frac{1}{b} = \frac{1}{2} 
+\end{equation*}
+\end{enumerate}
+
+\item 
+\end{enumerate}
 
 \subsubsection*{Exercice 6 - Programmation dynamique}
 
