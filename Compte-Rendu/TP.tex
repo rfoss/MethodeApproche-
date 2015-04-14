@@ -458,7 +458,39 @@ On conclut que $w_{j+1} > \frac{b}{2}$, et puisque $j \geq 2$ alors $cost(T) \ge
 \end{equation*}
 \end{enumerate}
 
-\item 
+\item \begin{enumerate}[a)]
+\item Il y a $\binom {n}{k} = \frac{n!}{k! (n-k)!}$ ensembles $S$ de taille $k$. On peut donc calculer le nombre total d'ensembles S:
+\begin{equation*}
+	N=\sum_{i=1}^{k} \binom{n}{i} = n! ( \frac{1}{(n-1)!} + \dots + \frac{1}{k!(n-k)!}) = n + \frac{n(n-1)}{2!} + \dots + \frac{n(n-1)\dots(n-k+1)}{k!}
+\end{equation*}
+Il y 'en a donc N $\approx O(n^{k}). $ Mais puisque pour chacun de ces ensembles, on utilise un algorithme glouton en $O(nlog(n))$. On arrive à une complexité en $O(n^{k+1})$.
+
+\item \begin{enumerate}[i.]
+\item Si $p \leq k$, cela signifie que l'on va trouver la meilleure solution $S$ possible et donc que $Sol_{PTAS}(I) = Opt(I)$.
+
+\item Supposons maintenant que $ p > k $. On note $P=\{i_{1},\dots, i_{k}\}$ 
+les indices associés à l'ensemble S. $w_{i_{1}}, \dots , w_{i_{k}}$ sont les points associés. Et on note $P^*$ les indices des objets de l'ensemble retourné par notre algorithme $S^*$.
+
+\begin{enumerate}[A.]
+\item Si $P^* = M$ alors on a $Sol_{PTAS}(I) = Opt(I)$.
+\item Supposons maintenant que $P^* \neq M$. On sait déjà que $b \geq cost(M)$. Soit $S$ un ensemble de taille $k$ composé des $k$ objets dont les poids sont maximaux et appliquons notre algorithme glouton qui va ajouter des objets. D'après la question 1.a), il existe $i_{q}$ tel que $cost(P^{*}) + w_{i_{q}} > b$ (sinon on ajouterais tout les objets). Soit j le premier objet ajouté par l'algorithme glouton, alors $j> i_{k}$ sinon on aurait pris cet objet à la place. On a donc $i_{k} < j < i_{q}$. Si on ajoute pas d'objets, on a quand même $i_{k} < i_{q}$, c'est à dire $w_{i_{q}} < w_{i_{k}}$ car sinon $cost(S) > b$.
+
+\item On a $w_{i_{q}} < w_{i_{k}}$ donc $(k+1)w_{i_{q}} < kw_{i_{k}} + w_{i_{k}} \leq  cost(P^{*})+ w_{i_{q}} \leq cost(M)$ et donc on peut déduire que $w_{i_{q}} \leq \frac{cost(M)}{k+1}$
+
+\item $cost(P^{*}) + w_{i_{q}} \geq cost(M)$ d'après la question B. On peut donc écrire que :
+\begin{equation*}
+	\frac{cost(M)}{k+1} \geq w_{i_{q}} \geq cost(M) - cost(P^{*})
+\end{equation*}
+\begin{equation*}
+	\frac{cost(M)}{cost(P^{*})} \geq (k+1) \frac{cost(M)}{cost(P^{*})} - (k+1)
+\end{equation*}
+\begin{equation*}
+	\frac{cost(M)}{cost(P^{*})} \leq \frac{k+1}{k} = 1 + \frac{1}{k} = 1 + \epsilon
+\end{equation*}
+Il s'agit donc bien d'un algorithme PTAS.
+\end{enumerate}
+\end{enumerate}
+\end{enumerate}
 \end{enumerate}
 
 \subsubsection*{Exercice 6 - Programmation dynamique}
