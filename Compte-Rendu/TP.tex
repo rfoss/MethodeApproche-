@@ -431,6 +431,87 @@ L'algorithme s'arrête et renvoi donc cette coupe. Cependant on remarque que si l
 
 \subsubsection*{Exercice 4 - Sur le problème de Partition}
 
+\begin{enumerate}
+\item Si $r=2$, on considère la solution $(A,\emptyset)$. Comme on
+  cherche une partition entre deux ensembles, cette solution est la
+  pire des solutions. Mais, comme le poids de $A$ est au pire deux
+  fois le poids $Y_1$ dans la solution optimale $(Y_1,Y_2)$ ( de même
+  pour $\emptyset$ et $Y_2$), on a bien une $2$-approx. 
+
+  Si $r>2$, comme on a une $2$-approx, en particulier on a une
+  $r$-approx.
+\item 
+  \begin{enumerate}
+  \item on cherche à montrer $\omega(Y_1)-L\le \frac{p(a_h)}{2}$. Par
+    l'absurde, supposons que :
+    \begin{eqnarray*}
+      \omega(Y_1)-L> \frac{p(a_h)}{2} \implies 2\omega(Y_1)-\omega(A)<p(a_h)
+    \end{eqnarray*}
+    Donc, après avoir ajouter $a_h$ dans $Y_1$, on peut ajouter un
+    autre objet de mÍme poids que $a_h$ or comme $p(a_{h+1})\le
+    p(a_h)$, on peut ajouter alors $a_{h+1}$ dans $Y_1$. Contradiction
+    car on a supposé que $a_h$ est le dernier objet ajouté dans $Y_1$
+    (les objets sont triés).
+  \item Supposons que $a_h$ a été ajouté lors de la première phase,
+    alors par définition, tout les $a_j$ avec $j\in[\![ k(r)+1,n]\!]$
+    ont été insérés dans $Y_2$. Donc, à chaque tour de boucle, on a
+    l'invariant :
+    \begin{equation*}
+      \sum_{a_i\in Y_1} p(a_i) > \sum_{a_i\in Y_2} p(a_i)
+    \end{equation*}
+    De plus on peut remarquer que pour que ce cas se produise, il faut
+    que après avoir ajouté $a_h$ à la première phase, tout les $a_j$
+    de la deuxième phase on un poids trop grand pour être dans
+    $Y_1$. Par consequent, on optient :
+    \begin{equation*}
+      L-\omega(Y_1) < a_n
+    \end{equation*}
+  \item Supposons que $a_h$ est ajoutÈ dans la deuxiËme phase. Par
+    dÈfinition on a :
+    \begin{equation*}
+      \forall j\in[\![1,k(r)]\!], p(a_h)<p(a_j)
+    \end{equation*}
+    En effet, car sinon on aurait ajoutÈ $a_h$ dans la première
+    phase. Pour montrer que $2L\ge p(a_h)(k(r)+1)$, on va raisonner
+    par contradition :
+    \begin{equation*}
+      2L< p(a_h)(k(r)+1) \implies \omega(A) < p(a_h)(k(r)+1)
+    \end{equation*}
+    Or ce n'est pas possible car au pire des cas les $a_j$ avec $j\in
+    [\![1,k(r)]\!]$ ont un poids supérieur à $a_h$ (car $h>k(r)$) et
+    donc :
+    \begin{equation*}
+      p(a_h)(k(r)+1)<p(a_1)(k(r)+1)<\omega(A)
+    \end{equation*} 
+    On a donc une contradiction, et $2L\ge p(a_h)(k(r)+1)$.
+  \item Si on a une solution optimale, alors nÈcessairement,
+    $\omega(A)$ est un multiple de deux et on peut avoir $Y_1$ et
+    $Y_2$ de même poids avec $Y_1\cup Y_2=A$. Donc on a :
+    \begin{equation*}
+      \omega(Y_1) = \omega(Y_2) = \frac{\omega(A)}{2} = L
+    \end{equation*}
+  \item On veut montrer que $\frac{\omega(Y_1)}{\omega{(Y_1^*)}}\le
+    r$. Par l'absurde, on a :
+    \begin{equation*}
+      \frac{\omega(Y_1)}{\omega(Y^*_1)}>r \implies
+      \frac{\omega(Y_1)}{L}>r \implies \omega(Y_1)>rL
+    \end{equation*}
+    Or on voit bien que c'est impossible. En effet si $r<2$ mais tend
+    vers $2$, on voit que $\omega(Y_1)$ tend vers $\omega(A)$. Or par
+    construction de l'algorithme c'est impossible. En effet, quand
+    $Y_1$ est grand, l'algorithme met les futurs éléments dans
+    $Y_2$. Donc  $\frac{\omega(Y_1)}{\omega{(Y_1^*)}}\le r$.
+  \end{enumerate}
+  \item On a :
+    \begin{itemize}
+    \item le tri se fait en $O(nlog(n))$
+    \item la première phase 
+    \item la deuxième phase peut se faire en $O(n)$. en effet, on peut
+      utiliser deux variables temporaires pour stocker les sommes
+      partielles, il ne reste plus que parcourir les $j\in
+      [\![k(r)+1,n]\!]$.
+    \end{itemize}
+\end{enumerate}
 \subsubsection*{Exercice 5 - Sur le problème du sac à  dos simple}
 
 Soit $w_{1}, \dots, w_{n}$ les poids de $n$ objets, $b$ la capacité du sac à dos. On cherche à trouver $T \subseteq \{1, \dots, n \}$ tel que $\sum_{i \in T } w_{i}$ soit maximum.
